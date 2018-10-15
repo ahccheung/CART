@@ -8,28 +8,28 @@ We have used our implementation of classification trees on a dataset of cardiac 
 
 Load data: 
 ```
-cnames=c("y")
+cnames = c("y")
 for(i in 1:22){
-    cnames=append(cnames, paste("F",i,"R",sep=""))
-    cnames=append(cnames, paste("F",i,"S",sep=""))
+    cnames = append(cnames, paste("F",i,"R",sep=""))
+    cnames = append(cnames, paste("F",i,"S",sep=""))
 }
      
-traindata=read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/spect/SPECTF.train",
-                     sep=",", col.names=cnames)
-rnum=c(1:nrow(traindata))
-traindata=cbind(traindata,rnum)
+traindata = read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/spect/SPECTF.train",
+                       sep = ",", col.names = cnames)
+rnum = c(1:nrow(traindata))
+traindata = cbind(traindata,rnum)
 ```
 Grow and prune tree using cross-validation with the Gini index:
 
 ```
-gini.trees=cv.trees(traindata,gini)
-gini.l=sapply(c(1:length(gini.trees$alphas)),function(x){numleaves(gini.trees$trees[[x]])})
+gini.trees = cv.trees(traindata, gini)
+gini.l = sapply(c(1:length(gini.trees$alphas)), function(x){numleaves(gini.trees$trees[[x]])})
 
 plot(gini.l, gini.trees$error, 
-    main="Cross-validated error rate for different sized trees using Gini index", 
-    xlab="Number of leaves", ylab="Error rate")
-gini.i=which.min(gini.trees$error)
+    main = "Cross-validated error rate for different sized trees using Gini index", 
+    xlab = "Number of leaves", ylab = "Error rate")
 
-#Error rate of tree when tested against test data
+# Choose tree and print error rate when tested against test data
+gini.i = which.min(gini.trees$error)
 print(tree.error(gini.trees$trees[[gini.i]],testdata)
 ```
