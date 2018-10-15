@@ -7,7 +7,8 @@ We have used our implementation of classification trees on a dataset of cardiac 
 ### Usage example
 
 Load data: 
-```cnames=c("y")
+```
+cnames=c("y")
 for(i in 1:22){
     cnames=append(cnames, paste("F",i,"R",sep=""))
     cnames=append(cnames, paste("F",i,"S",sep=""))
@@ -20,7 +21,8 @@ traindata=cbind(traindata,rnum)
 ```
 Grow and prune tree using cross-validation with the Gini index:
 
-```gini.trees=cv.trees(traindata,gini)
+```
+gini.trees=cv.trees(traindata,gini)
 gini.l=sapply(c(1:length(gini.trees$alphas)),function(x){numleaves(gini.trees$trees[[x]])})
 
 plot(gini.l, gini.trees$error, 
@@ -29,4 +31,5 @@ plot(gini.l, gini.trees$error,
 gini.i=which.min(gini.trees$error)
 
 #Error rate of tree when tested against test data
-print(tree.error(gini.trees$trees[[gini.i]],testdata) ```
+print(tree.error(gini.trees$trees[[gini.i]],testdata)
+```
